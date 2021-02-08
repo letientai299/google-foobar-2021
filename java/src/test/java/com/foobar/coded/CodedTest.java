@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class SolutionTest {
+public class CodedTest {
 
     @ParameterizedTest(name = "{index} => array   = {0} ),  expected = {1} ")
     @MethodSource("getTests")
     public void testCoded(int[] digits, int expected) {
-        int actual = Solution.solution(digits);
+        int actual = Coded.solution(digits);
         assertEquals(expected, actual);
     }
 

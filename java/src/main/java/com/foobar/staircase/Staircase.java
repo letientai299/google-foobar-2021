@@ -1,7 +1,7 @@
 package com.foobar.staircase;
 
 
-public class Solution {
+public class Staircase {
     public static int solution(int n) {
         int v = 0;
         for (int i = 1; i < (n + 1) / 2; i++) {

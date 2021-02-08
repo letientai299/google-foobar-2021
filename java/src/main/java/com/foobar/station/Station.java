@@ -3,7 +3,7 @@ package com.foobar.station;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Solution {
+public class Station {
     public static int[] solution(int[] l, int t) {
         Map<Integer, Integer> tmp = new HashMap<>();
         int s = 0;

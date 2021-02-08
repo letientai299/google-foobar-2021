@@ -3,7 +3,7 @@ package com.foobar.minion;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Solution {
+public class Minion {
     public static int[] solution(int[] data, int n) {
 //        System.out.printf("%s, %d\n", Arrays.toString(data), n);
         Map<Integer, Integer> freq = new HashMap<>();

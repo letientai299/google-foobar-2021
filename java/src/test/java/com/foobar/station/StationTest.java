@@ -10,11 +10,11 @@ import java.util.stream.Stream;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SolutionTest {
+class StationTest {
     @ParameterizedTest
     @MethodSource("getTests")
     public void testStation(int[] l, int t, int[] expected) {
-        int[] actual = Solution.solution(l, t);
+        int[] actual = Station.solution(l, t);
         assertArrayEquals(actual, expected, () ->
                 format("expect=%s, actual=%s",
                         Arrays.toString(expected),

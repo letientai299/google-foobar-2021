@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SolutionTest {
+class StaircaseTest {
     @ParameterizedTest
     @MethodSource("getTests")
     public void testStation(int n, int expected) {
-        int actual = Solution.solution(n);
+        int actual = Staircase.solution(n);
         assertEquals(actual, expected);
     }
 

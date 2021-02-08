@@ -2,7 +2,7 @@ package com.foobar.coded;
 
 import java.util.Arrays;
 
-public class Solution {
+public class Coded {
     public static int solution(int[] digits) {
         // it's unclear how to handle overflow (more than 10 digits)!
         // their test have such cases, it's just not belong to the hidden tests.

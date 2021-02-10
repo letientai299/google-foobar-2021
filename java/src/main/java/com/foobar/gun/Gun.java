@@ -1,136 +1,126 @@
 package com.foobar.gun;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Gun {
-    // This is a goddamn hard problem! Even though I an think of the reflection
-    // idea, I can't prove and reduce from infinite to finite.
-    //
-    // From this article, we know that there's maximum 16 points to shoot.
-    // https://amininima.wordpress.com/2013/05/27/the-laser-gun/
-    //
-    // Now the problems ares remove duplicated target, calculate the distance
-    // that the beam should travel and remove out of range targets.
-    //
-    // I guess (but can't prove yet) that we can just use calculate the travel
-    // distance to those 1+15 reflections in following picture:
-    // https://amininima.files.wordpress.com/2013/05/lasergunguards1.png
-    // But these 16 points are not asymetric. So we need to make it 25 to be
-    // sure!
+    // This is a goddamn hard problem!
     public static int solution(int[] dim, int[] me, int[] train, int d) {
-        Map<Point, Integer> hitTrain = solve(dim, me, train, d);
-        Map<Point, Integer> hitMe = solve(dim, me, me, d);
-        int res = 0;
-        for (Map.Entry<Point, Integer> e : hitTrain.entrySet()) {
-            Point p = e.getKey();
-            int dis = e.getValue();
-            if (hitMe.containsKey(p) && hitMe.get(p) <= dis) {
-                continue;
-            }
-            res++;
-        }
-        return res;
+        Set<Point> possibleVectors = shootVectors(dim, me, train, d);
+        return possibleVectors.size();
     }
 
-    private static Map<Point, Integer> solve(int[] dim, int[] me, int[] train, int d) {
-        // { point -> distance square}
+    static Set<Point> shootVectors(int[] dim, int[] me, int[] train, int d) {
         Point m = new Point(me[0], me[1]);
         Point t = new Point(train[0], train[1]);
+        Point size = new Point(dim[0], dim[1]);
 
-        int w = dim[0];
-        int h = dim[1];
+        // all points to aim for can be one of following formulas:
+        // (a*w + t.x, b*h + t.y)
+        // (a*w - t.x, b*h - t.y)
+        // so, we will find the min and max of a and b
+        int maxA = (d + t.x + m.x) / size.x;
+        int maxB = (d + t.y + m.y) / size.y;
 
-        Map<Point, Integer> trainTargets = buildTargets(m, t, w, h);
-        d *= d;
+        Set<Point> vectors = new HashSet<>();
+        Set<Point> dangerous = new HashSet<>(); // directions that can hit me
 
-        Map<Point, Integer> vectors = new HashMap<>();
-        int dis = t.disSquare(m);
-        if (dis != 0 && dis <= d) {
-            Point v = new Point(t.x - m.x, t.y - m.y).vector();
-            vectors.put(v, dis);
-        }
-
-        for (Map.Entry<Point, Integer> entry : trainTargets.entrySet()) {
-            Point p = entry.getKey();
-            dis = entry.getValue();
-            if (dis == 0 || dis > d) {
-                continue;
+        for (int a = 0; a <= maxA / 2; a++) {
+            for (int b = 0; b <= maxB / 2; b++) {
+                Set<Point> potentials = makePotentialVectors(m, d, size, a, b, t, dangerous);
+                vectors.addAll(potentials);
             }
-
-            Point v = new Point(p.x - m.x, p.y - m.y).vector();
-            vectors.put(v, dis);
         }
-
         return vectors;
     }
 
-    private static Map<Point, Integer> buildTargets(Point m, Point t, int w, int h) {
-        // first target is always unique
-        Map<Point, Integer> targets = new HashMap<>();
-        targets.put(t, t.disSquare(m));
+    private static Set<Point> makePotentialVectors(
+            Point m, int d, Point size, int a, int b, Point t, final Set<Point> dangerous
+    ) {
+        Set<Point> ts = possibleTargets(size, a, b, t);
+        return ts.stream()
+                .map(x -> makeVector(d, m, x, size, dangerous))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
 
-        // 4 reflections against the edges
-        Point r = new Point(t.x, h + h - t.y); // top edge
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(t.x, -t.y); // bottom edge
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-t.x, t.y); // left edge
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(w + w - t.x, t.y); // right edge
-        targets.putIfAbsent(r, r.disSquare(m));
+    private static Point makeVector(
+            int d, Point m, Point p, Point size, Set<Point> dangerous
+    ) {
+        int dis = p.disSquare(m);
+        if (dis == 0 || dis > d * d) {
+            return null;
+        }
 
-        // 4 reflections against the corners
-        r = new Point(-t.x, -t.y); // bottom-left
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-t.x, h + h - t.y); // top-left
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(w + w - t.x, -t.y); // bottom-right
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(w + w - t.x, h + h - t.y); // top-right
-        targets.putIfAbsent(r, r.disSquare(m));
+        Point v = new Point(p.x - m.x, p.y - m.y).vector();
 
-        // 5 reflections on top
-        r = new Point(-2 * w + t.x, 2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-t.x, 2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(t.x, 2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w - t.x, 2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w + t.x, 2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
+        if (dangerous.contains(v)) {
+            return null;
+        }
 
-        // 5 reflections at bottom
-        r = new Point(t.x, -2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-t.x, -2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-2 * w + t.x, -2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w + t.x, -2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w - t.x, -2 * h + t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
+        int w = size.x;
+        int maxA = ((int) Math.ceil(Math.sqrt(dis)) + 2 * m.x) / w;
+        int h = size.y;
+        int maxB = ((int) Math.ceil(Math.sqrt(dis)) + 2 * m.y) / h;
 
-        // 3 additional reflections to the right
-        r = new Point(2 * w + t.x, 2 * h - t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w + t.x, t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(2 * w + t.x, -t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
+        outer:
+        for (int a = 0; a <= maxA / 2; a++) {
+            for (int b = 0; b <= maxB / 2; b++) {
+                Set<Point> ms = possibleTargets(size, a, b, m);
+                for (Point c : ms) {
+                    if (c.x >= 0 && c.x <= w && c.y >= 0 && c.y <= h) {
+                        continue;
+                    }
 
-        // 3 additional reflections to the left
-        r = new Point(-2 * w + t.x, 2 * h - t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-2 * w + t.x, t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        r = new Point(-2 * w + t.x, -t.y);
-        targets.putIfAbsent(r, r.disSquare(m));
-        return targets;
+                    if (c.equals(p)) {
+                        continue;
+                    }
+
+                    Point dv = new Point(c.x - m.x, c.y - m.y).vector();
+                    if (dv.equals(v) && c.disSquare(m) <= dis) {
+                        dangerous.add(v);
+                        break outer;
+                    }
+                }
+            }
+        }
+
+        if (dangerous.contains(v)) {
+            return null;
+        }
+
+        return v;
+    }
+
+    private static Set<Point> possibleTargets(Point size, int a, int b, Point t) {
+        Set<Point> ts = new HashSet<>();
+        int w = size.x;
+        int h = size.y;
+        a *= 2;
+        b *= 2;
+        ts.add(new Point(a * w + t.x, b * h + t.y));
+        ts.add(new Point(a * w - t.x, b * h + t.y));
+        ts.add(new Point(a * w + t.x, b * h - t.y));
+        ts.add(new Point(a * w - t.x, b * h - t.y));
+
+        ts.add(new Point(-a * w + t.x, b * h + t.y));
+        ts.add(new Point(-a * w - t.x, b * h + t.y));
+        ts.add(new Point(-a * w + t.x, b * h - t.y));
+        ts.add(new Point(-a * w - t.x, b * h - t.y));
+
+        ts.add(new Point(-a * w + t.x, -b * h + t.y));
+        ts.add(new Point(-a * w - t.x, -b * h + t.y));
+        ts.add(new Point(-a * w + t.x, -b * h - t.y));
+        ts.add(new Point(-a * w - t.x, -b * h - t.y));
+
+
+        ts.add(new Point(a * w + t.x, -b * h + t.y));
+        ts.add(new Point(a * w - t.x, -b * h + t.y));
+        ts.add(new Point(a * w + t.x, -b * h - t.y));
+        ts.add(new Point(a * w - t.x, -b * h - t.y));
+        return ts;
     }
 
     static class Point {
@@ -148,10 +138,7 @@ public class Gun {
 
         @Override
         public String toString() {
-            return "Point{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
+            return "(" + x + "," + y + ')';
         }
 
         @Override
@@ -172,7 +159,7 @@ public class Gun {
             int y = (this.y >= 0) ? this.y : -this.y;
             int g = gcd(x, y);
             if (g == 0) {
-                System.out.println("ops");
+                return this;
             }
             return new Point(this.x / g, this.y / g);
         }

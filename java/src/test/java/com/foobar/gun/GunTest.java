@@ -26,6 +26,14 @@ class GunTest {
                         7 // directions
                 ),
 
+                Arguments.of(
+                        new int[]{3, 3},
+                        new int[]{1, 1},
+                        new int[]{1, 2},
+                        4, // distance
+                        4 // directions
+                ),
+
 
                 Arguments.of(
                         new int[]{4, 4},
@@ -52,5 +60,4 @@ class GunTest {
                 )
         );
     }
-
 }

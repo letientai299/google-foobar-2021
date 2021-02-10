@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class Gun {
     // This is a goddamn hard problem!
     public static int solution(int[] dim, int[] me, int[] train, int d) {
-        Set<Point> possibleVectors = shootVectors(dim, me, train, d);
-        return possibleVectors.size();
+        Set<Point> vectors = shootVectors(dim, me, train, d);
+        return vectors.size();
     }
 
     static Set<Point> shootVectors(int[] dim, int[] me, int[] train, int d) {
@@ -60,38 +60,51 @@ public class Gun {
             return null;
         }
 
-        int w = size.x;
-        int maxA = ((int) Math.ceil(Math.sqrt(dis)) + 2 * m.x) / w;
-        int h = size.y;
-        int maxB = ((int) Math.ceil(Math.sqrt(dis)) + 2 * m.y) / h;
-
-        outer:
-        for (int a = 0; a <= maxA / 2; a++) {
-            for (int b = 0; b <= maxB / 2; b++) {
-                Set<Point> ms = possibleTargets(size, a, b, m);
-                for (Point c : ms) {
-                    if (c.x >= 0 && c.x <= w && c.y >= 0 && c.y <= h) {
-                        continue;
-                    }
-
-                    if (c.equals(p)) {
-                        continue;
-                    }
-
-                    Point dv = new Point(c.x - m.x, c.y - m.y).vector();
-                    if (dv.equals(v) && c.disSquare(m) <= dis) {
-                        dangerous.add(v);
-                        break outer;
-                    }
-                }
-            }
-        }
-
-        if (dangerous.contains(v)) {
+        if (isDangerous(m, p, size, dis, v)) {
+            dangerous.add(v);
             return null;
         }
 
         return v;
+    }
+
+    private static boolean isDangerous(Point m, Point p, Point size, int dis, Point v) {
+        if (p.equals(m)) {
+            return true;
+        }
+
+        boolean isOutsize = (p.x < 0 || p.x > size.x || p.y < 0 || p.y > size.y);
+        if (!isOutsize) {
+            return false;
+        }
+
+        if (v.x == 0 || v.y == 0) {
+            return true;
+        }
+
+        int w = size.x;
+        int h = size.y;
+
+        int o = (p.x - m.x) / w;
+
+        for (int a = 0; a <= o / 2; a++) {
+            Set<Point> ms = possibleTargets(size, a, a, m);
+            for (Point c : ms) {
+                if (c.x >= 0 && c.x <= w && c.y >= 0 && c.y <= h) {
+                    continue;
+                }
+
+                if (c.equals(p)) {
+                    continue;
+                }
+
+                Point dv = new Point(c.x - m.x, c.y - m.y).vector();
+                if (dv.equals(v) && c.disSquare(m) <= dis) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private static Set<Point> possibleTargets(Point size, int a, int b, Point t) {
@@ -163,6 +176,7 @@ public class Gun {
             }
             return new Point(this.x / g, this.y / g);
         }
+
     }
 
     static int gcd(int x, int y) {

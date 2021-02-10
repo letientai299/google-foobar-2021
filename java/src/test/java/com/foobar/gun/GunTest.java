@@ -19,6 +19,14 @@ class GunTest {
     static Stream<Arguments> getTests() {
         return Stream.of(
                 Arguments.of(
+                        new int[]{4, 4},
+                        new int[]{1, 1},
+                        new int[]{2, 2},
+                        6, // distance
+                        7 // directions
+                ),
+
+                Arguments.of(
                         new int[]{3, 2},
                         new int[]{1, 1},
                         new int[]{2, 1},
@@ -33,16 +41,6 @@ class GunTest {
                         4, // distance
                         4 // directions
                 ),
-
-
-                Arguments.of(
-                        new int[]{4, 4},
-                        new int[]{1, 1},
-                        new int[]{2, 2},
-                        6, // distance
-                        7 // directions
-                ),
-
 
                 Arguments.of(
                         new int[]{3, 2},

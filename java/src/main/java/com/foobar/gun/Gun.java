@@ -15,6 +15,10 @@ public class Gun {
     static Set<Point> shootVectors(int[] dim, int[] me, int[] train, int d) {
         Point m = new Point(me[0], me[1]);
         Point t = new Point(train[0], train[1]);
+        if (m.disSquare(t) > d * d) {
+            return new HashSet<>();
+        }
+
         Point size = new Point(dim[0], dim[1]);
 
         // all points to aim for can be one of following formulas:
@@ -33,6 +37,7 @@ public class Gun {
                 vectors.addAll(potentials);
             }
         }
+
         return vectors;
     }
 
@@ -85,25 +90,35 @@ public class Gun {
         int w = size.x;
         int h = size.y;
 
-        int o = (p.x - m.x) / w;
-
-        for (int a = 0; a <= o / 2; a++) {
-            Set<Point> ms = possibleTargets(size, a, a, m);
-            for (Point c : ms) {
-                if (c.x >= 0 && c.x <= w && c.y >= 0 && c.y <= h) {
-                    continue;
-                }
-
-                if (c.equals(p)) {
-                    continue;
-                }
-
-                Point dv = new Point(c.x - m.x, c.y - m.y).vector();
-                if (dv.equals(v) && c.disSquare(m) <= dis) {
-                    return true;
-                }
+        Point r = new Point(m.x + v.x, m.y + v.y);
+        while (r.disSquare(m) < dis) {
+            isOutsize = (r.x < 0 || r.x > size.x || r.y < 0 || r.y > size.y);
+            if (!isOutsize) {
+                r.x += v.x;
+                r.y += v.y;
+                continue;
             }
+
+            if ((r.x - m.x) % (2 * w) == 0 && (r.y - m.y) % (2 * h) == 0) {
+                return true;
+            }
+
+            if ((r.x + m.x) % (2 * w) == 0 && (r.y + m.y) % (2 * h) == 0) {
+                return true;
+            }
+
+            if ((r.x - m.x) % (2 * w) == 0 && (r.y + m.y) % (2 * h) == 0) {
+                return true;
+            }
+
+            if ((r.x + m.x) % (2 * w) == 0 && (r.y - m.y) % (2 * h) == 0) {
+                return true;
+            }
+
+            r.x += v.x;
+            r.y += v.y;
         }
+
         return false;
     }
 

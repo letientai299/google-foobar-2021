@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CodedTest {
-
     @ParameterizedTest(name = "{index} => array   = {0} ),  expected = {1} ")
     @MethodSource("getTests")
     public void testCoded(int[] digits, int expected) {
@@ -20,7 +19,6 @@ public class CodedTest {
 
     static Stream<Arguments> getTests() {
         return Stream.of(
-                Arguments.of(new int[]{0, 0, 0, 0, 1, 1, 1, 1, 1, 3, 3, 3, 3}, 3),
                 Arguments.of(new int[]{1, 1, 3}, 3),
                 Arguments.of(new int[]{6, 3}, 63),
                 Arguments.of(new int[]{3, 1, 4, 1}, 4311),

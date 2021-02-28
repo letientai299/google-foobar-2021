@@ -345,7 +345,7 @@ public class DisorderLyEscape {
         //
         // - Count how many ways to select l_i elements.
         // - Count number of disjoint cycles for l_i elements that has length
-        // l_i, which is (l_i -1)! (see https://en.wikipedia.org/wiki/Cyclic_permutation)
+        // l_i, which is (l_i-1)! (see https://en.wikipedia.org/wiki/Cyclic_permutation)
         //
         // Note that our counting might count 1 permutation several times. For
         // examples, if the cycles configurations are [2, 2, 3], fixed=0, then
@@ -478,9 +478,5 @@ public class DisorderLyEscape {
         //noinspection SuspiciousNameCombination
         return gcd(y % x, x);
     }
-
-//    public static void main(String[] args) {
-//        System.out.println(solution(2, 4, 3));
-//    }
 }
 

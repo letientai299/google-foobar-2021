@@ -7,7 +7,7 @@ Right now, just some take aways for you:
   it myself instead).
 
 - I don't expect to get an interview from Google, just feel cool to accomplish
-  somethings I couldn't have done 6 years ago.
+  somethings I couldn't have done 6 years ago. <!-- But interview me please! -->
 
 Some lesson learns for myself:
 

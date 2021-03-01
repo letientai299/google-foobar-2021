@@ -10,8 +10,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.foobar.disorderlyEscape.DisorderLyEscape.factorial;
-import static com.foobar.disorderlyEscape.DisorderLyEscape.solution;
+import static com.foobar.disorderlyEscape.DisorderLyEscape.*;
 import static java.lang.Math.E;
 import static java.math.BigInteger.valueOf;
 
@@ -19,7 +18,7 @@ public class App {
     private final static Logger log = LoggerFactory.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        // Some attempts to find the magic fomula.
+        // Some attempts to find the magic formula :)
         // printResultTable(10, 10, 2);
         // printResultTable(10, 10, 3);
         // printResultTable(10, 10, 4);
@@ -29,16 +28,20 @@ public class App {
     }
 
     private static void bench() {
-        int W = 15;
-        int H = 15;
+        long start = System.nanoTime();
+        int W = 20;
+        int H = 20;
         int S = 5;
-        for (int w = 0; w < W; w++) {
-            for (int h = 0; h < H; h++) {
+        for (int w = 0; w <= W; w++) {
+            for (int h = 0; h <= H; h++) {
                 for (int s = 0; s < S; s++) {
                     solution(w, h, s);
                 }
             }
         }
+        long end = System.nanoTime();
+        System.out.printf("(w,h,s)=([0,%d],[0,%d],%d), elapsed time: %.4f ms\n",
+                W, H, S, (end - start) / 1000000.);
     }
 
     private static void followS(int start, int end) {

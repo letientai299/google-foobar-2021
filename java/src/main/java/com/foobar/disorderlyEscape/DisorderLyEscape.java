@@ -220,18 +220,24 @@ public class DisorderLyEscape {
     // - The sum of all result from above steps, after divide for |G| is our
     // final result.
     public static String solution(int width, int height, int states) {
-        List<Permutation> colPermutations = genPermutations(width);
-        List<Permutation> rowPermutations = genPermutations(height);
+        final List<Permutation> colPermutations = genPermutations(width);
+        final List<Permutation> rowPermutations = genPermutations(height);
 
-        BigInteger S = BigInteger.valueOf(states);
+        final BigInteger S = BigInteger.valueOf(states);
 
-        BigInteger total = ZERO;
-        for (Permutation cp : colPermutations) {
-            for (Permutation rp : rowPermutations) {
-                BigInteger fixedMatrices = countFixedMatrices(rp, cp, S);
-                total = total.add(fixedMatrices);
-            }
-        }
+        BigInteger total = colPermutations
+                .stream()
+                .parallel()
+                .map(cp -> {
+                    BigInteger sum = ZERO;
+                    for (Permutation rp : rowPermutations) {
+                        BigInteger fixedMatrices = countFixedMatrices(rp, cp, S);
+                        sum = sum.add(fixedMatrices);
+                    }
+                    return sum;
+                })
+                .reduce(BigInteger::add)
+                .orElse(ZERO);
 
         BigInteger W = BigInteger.valueOf(width);
         BigInteger H = BigInteger.valueOf(height);

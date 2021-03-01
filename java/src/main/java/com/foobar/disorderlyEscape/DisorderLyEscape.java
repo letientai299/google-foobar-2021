@@ -3,8 +3,11 @@ package com.foobar.disorderlyEscape;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
@@ -273,25 +276,30 @@ public class DisorderLyEscape {
     }
 
     static List<Permutation> genPermutations(int n) {
-        List<Permutation> result = new ArrayList<>();
-
         // fixed should only run from 0 to n-2, because if we fix n-1 elements,
         // the last one has no where to go.
-        for (int fixed = 0; fixed <= n - 2; fixed++) {
-            // Recall our logic about permutation configurations:
-            //
-            // N = fixed + l_1 + l_2 + ... + l_k
-            //
-            // Since we know the `fixed`, we need to generate the list of l_i,
-            // we just need to generate all the list of numbers that sum to
-            // N-fixed.
-            List<int[]> cyclesList = numbersSumToN(n - fixed);
+        List<Permutation> result = IntStream.rangeClosed(0, n - 2)
+                .parallel()
+                .mapToObj(fixed -> {
+                    List<Permutation> ls = new ArrayList<>();
 
-            for (int[] cycles : cyclesList) {
-                Permutation p = makePermutation(n, fixed, cycles);
-                result.add(p);
-            }
-        }
+                    // Recall our logic about permutation configurations:
+                    //
+                    // N = fixed + l_1 + l_2 + ... + l_k
+                    //
+                    // Since we know the `fixed`, we need to generate the list
+                    // of l_i, we just need to generate all the list of numbers
+                    // that sum to N-fixed.
+                    List<int[]> cyclesList = numbersSumToN(n - fixed);
+
+                    for (int[] cycles : cyclesList) {
+                        Permutation p = makePermutation(n, fixed, cycles);
+                        ls.add(p);
+                    }
+                    return ls;
+                })
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         // Our result would be incomplete without the identity permutation.
         result.add(new Permutation(n, new int[0], ONE));

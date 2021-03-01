@@ -248,7 +248,7 @@ public class DisorderLyEscape {
 
     private static BigInteger countFixedMatrices(Permutation rp, Permutation cp, BigInteger S) {
         // calculate for M(F) sub-matrix
-        BigInteger fixed = pow(S, BigInteger.valueOf((long) rp.fixed * cp.fixed));
+        BigInteger fixed = S.pow(rp.fixed * cp.fixed);
         fixed = fixed.multiply(rp.count);
         fixed = fixed.multiply(cp.count);
 
@@ -460,17 +460,6 @@ public class DisorderLyEscape {
         }
 
         return v;
-    }
-
-    static BigInteger pow(BigInteger a, BigInteger b) {
-        BigInteger r = ONE;
-        BigInteger i = ONE;
-        while (i.compareTo(b) <= 0) {
-            r = r.multiply(a);
-            i = i.add(ONE);
-        }
-
-        return r;
     }
 
     private static int lcm(int a, int b) {

@@ -204,20 +204,4 @@ class DisorderLyEscapeTest {
                 ))
         );
     }
-
-    @ParameterizedTest
-    @MethodSource("powTests")
-    void pow(BigInteger a, BigInteger b, BigInteger want) {
-        BigInteger actual = DisorderLyEscape.pow(a, b);
-        assertEquals(want, actual);
-    }
-
-    private static Stream<Arguments> powTests() {
-        return Stream.of(
-                of(BigInteger.valueOf(1000), BigInteger.valueOf(0), ONE),
-                of(BigInteger.valueOf(2), BigInteger.valueOf(3), BigInteger.valueOf(8)),
-                of(BigInteger.valueOf(3), BigInteger.valueOf(10), BigInteger.valueOf(59049))
-        );
-    }
-
 }

@@ -239,9 +239,7 @@ public class DisorderLyEscape {
                 .reduce(BigInteger::add)
                 .orElse(ZERO);
 
-        BigInteger W = BigInteger.valueOf(width);
-        BigInteger H = BigInteger.valueOf(height);
-        BigInteger G = factorial(W).multiply(factorial(H));
+        BigInteger G = factorial(width).multiply(factorial(height));
         BigInteger result = total.divide(G);
         return result.toString();
     }
@@ -261,8 +259,8 @@ public class DisorderLyEscape {
         fixed = fixed.multiply(m);
 
         // calculate for those sub-matrices that permute both sides.
-        for (Integer lr : rp.cycles) {
-            for (Integer lc : cp.cycles) {
+        for (int lr : rp.cycles) {
+            for (int lc : cp.cycles) {
                 int t = lr * lc / lcm(lr, lc);
                 m = S.pow(t);
                 fixed = fixed.multiply(m);
@@ -344,7 +342,7 @@ public class DisorderLyEscape {
         BigInteger count = combination(N, f);
 
         BigInteger remains = BigInteger.valueOf(n - fixed);
-        BigInteger repeatedLen = ONE;
+        int repeatedLen = 1;
         int previousLen = 0;
 
         // Then, for each cycle-length l_i, we count how many ways to construct
@@ -369,18 +367,18 @@ public class DisorderLyEscape {
         // Since our numbersSumToN function should generate a sorted list, we
         // can keep track of previous l_i during counting and remove duplication
         // by divide current result with `repeatedLen!`.
-        for (Integer l : cycles) {
-            BigInteger len = BigInteger.valueOf(l);
+        for (int ln : cycles) {
+            BigInteger len = BigInteger.valueOf(ln);
             BigInteger selections = combination(remains, len);
             remains = remains.subtract(len);
-            BigInteger disjointCycles = factorial(len.subtract(ONE));
+            BigInteger disjointCycles = factorial(ln - 1);
             count = count.multiply(selections).multiply(disjointCycles);
-            if (previousLen == l) {
-                repeatedLen = repeatedLen.add(ONE);
+            if (previousLen == ln) {
+                repeatedLen++;
             } else {
                 count = count.divide(factorial(repeatedLen));
-                repeatedLen = ONE;
-                previousLen = l;
+                repeatedLen = 1;
+                previousLen = ln;
             }
         }
 
@@ -436,12 +434,10 @@ public class DisorderLyEscape {
         }
     }
 
-    static BigInteger factorial(BigInteger n) {
+    static BigInteger factorial(int n) {
         BigInteger r = ONE;
-        BigInteger i = BigInteger.valueOf(2);
-        while (i.compareTo(n) <= 0) {
-            r = r.multiply(i);
-            i = i.add(ONE);
+        for (int i = 1; i <= n; i++) {
+            r = r.multiply(BigInteger.valueOf(i));
         }
         return r;
     }

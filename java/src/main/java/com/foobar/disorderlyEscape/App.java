@@ -10,9 +10,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.foobar.disorderlyEscape.DisorderLyEscape.*;
+import static com.foobar.disorderlyEscape.DisorderLyEscape.factorial;
+import static com.foobar.disorderlyEscape.DisorderLyEscape.solution;
 import static java.lang.Math.E;
-import static java.math.BigInteger.valueOf;
 
 public class App {
     private final static Logger log = LoggerFactory.getLogger(App.class.getName());
@@ -85,7 +85,7 @@ public class App {
             for (int j = 1; j <= w; j++) {
                 String res = solution(j, i, s);
                 BigInteger b = new BigInteger(res);
-                BigInteger f = factorial(valueOf(i)).multiply(factorial(valueOf(j)));
+                BigInteger f = factorial(i).multiply(factorial(j));
                 b = b.multiply(f);
                 double d = Math.log(b.doubleValue()) / Math.log(s);
                 long guess = near(Math.pow(E, s));

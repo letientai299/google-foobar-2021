@@ -1,11 +1,11 @@
 package com.foobar.disorderlyEscape;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -93,38 +93,38 @@ class DisorderLyEscapeTest {
 
     @ParameterizedTest
     @MethodSource("numbersSumToNTests")
-    void numbersSumToN(int n, List<List<Integer>> want) {
-        List<List<Integer>> lists = DisorderLyEscape.numbersSumToN(n);
-        assertEquals(want, lists);
+    void numbersSumToN(int n, List<int[]> want) {
+        List<int[]> lists = DisorderLyEscape.numbersSumToN(n);
+        Assertions.assertThat(lists).hasSameElementsAs(want);
     }
 
     private static Stream<Arguments> numbersSumToNTests() {
         return Stream.of(
-                of(2, List.of(List.of(2))),
-                of(3, List.of(List.of(3))),
+                of(2, List.of(new int[]{2})),
+                of(3, List.of(new int[]{3})),
 
                 of(4, List.of(
-                        List.of(2, 2),
-                        List.of(4)
+                        new int[]{2, 2},
+                        new int[]{4}
                 )),
 
                 of(5, List.of(
-                        List.of(2, 3),
-                        List.of(5)
+                        new int[]{2, 3},
+                        new int[]{5}
                 )),
 
                 of(6, List.of(
-                        List.of(2, 2, 2),
-                        List.of(2, 4),
-                        List.of(3, 3),
-                        List.of(6)
+                        new int[]{2, 2, 2},
+                        new int[]{2, 4},
+                        new int[]{3, 3},
+                        new int[]{6}
                 )),
 
                 of(7, List.of(
-                        List.of(2, 2, 3),
-                        List.of(2, 5),
-                        List.of(3, 4),
-                        List.of(7)
+                        new int[]{2, 2, 3},
+                        new int[]{2, 5},
+                        new int[]{3, 4},
+                        new int[]{7}
                 ))
         );
     }
@@ -152,7 +152,7 @@ class DisorderLyEscapeTest {
 
     @ParameterizedTest
     @MethodSource("makePermutationTests")
-    void makePermutation(int n, int fixed, List<Integer> cycles, BigInteger wantCount) {
+    void makePermutation(int n, int fixed, int[] cycles, BigInteger wantCount) {
         DisorderLyEscape.Permutation p = DisorderLyEscape.makePermutation(n, fixed, cycles);
         assertEquals(wantCount, p.count);
     }
@@ -162,7 +162,7 @@ class DisorderLyEscapeTest {
                 // 12 34
                 // 13 24
                 // 14 23
-                of(4, 0, List.of(2, 2), BigInteger.valueOf(3)),
+                of(4, 0, new int[]{2, 2}, BigInteger.valueOf(3)),
 
                 // 12 34 56
                 // 12 35 46
@@ -183,9 +183,9 @@ class DisorderLyEscapeTest {
                 // 16 23 45
                 // 16 24 35
                 // 16 25 34
-                of(6, 0, List.of(2, 2, 2), BigInteger.valueOf(15)),
-                of(5, 1, List.of(2, 2), BigInteger.valueOf(3 * 5)),
-                of(7, 0, List.of(2, 2, 3), BigInteger.valueOf(210))
+                of(6, 0, new int[]{2, 2, 2}, BigInteger.valueOf(15)),
+                of(5, 1, new int[]{2, 2}, BigInteger.valueOf(3 * 5)),
+                of(7, 0, new int[]{2, 2, 3}, BigInteger.valueOf(210))
         );
     }
 
@@ -199,8 +199,8 @@ class DisorderLyEscapeTest {
     private static Stream<Arguments> genPermutationsTests() {
         return Stream.of(
                 of(2, List.of(
-                        new DisorderLyEscape.Permutation(0, List.of(2), ONE),
-                        new DisorderLyEscape.Permutation(2, Collections.emptyList(), ONE)
+                        new DisorderLyEscape.Permutation(0, new int[]{2}, ONE),
+                        new DisorderLyEscape.Permutation(2, new int[0], ONE)
                 ))
         );
     }

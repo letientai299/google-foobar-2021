@@ -2,7 +2,7 @@ package com.foobar.disorderlyEscape;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -247,11 +247,11 @@ public class DisorderLyEscape {
         fixed = fixed.multiply(cp.count);
 
         // calculate for those sub-matrices that only permute on rows
-        BigInteger m = S.pow(cp.fixed * rp.cycles.size());
+        BigInteger m = S.pow(cp.fixed * rp.cycles.length);
         fixed = fixed.multiply(m);
 
         // calculate for those sub-matrices that only permute on columns
-        m = S.pow(rp.fixed * cp.cycles.size());
+        m = S.pow(rp.fixed * cp.cycles.length);
         fixed = fixed.multiply(m);
 
         // calculate for those sub-matrices that permute both sides.
@@ -279,36 +279,39 @@ public class DisorderLyEscape {
             // Since we know the `fixed`, we need to generate the list of l_i,
             // we just need to generate all the list of numbers that sum to
             // N-fixed.
-            List<List<Integer>> cyclesList = numbersSumToN(n - fixed);
+            List<int[]> cyclesList = numbersSumToN(n - fixed);
 
-            for (List<Integer> cycles : cyclesList) {
+            for (int[] cycles : cyclesList) {
                 Permutation p = makePermutation(n, fixed, cycles);
                 result.add(p);
             }
         }
 
         // Our result would be incomplete without the identity permutation.
-        result.add(new Permutation(n, Collections.emptyList(), ONE));
+        result.add(new Permutation(n, new int[0], ONE));
         return result;
     }
 
-    static List<List<Integer>> numbersSumToN(int n) {
-        List<List<Integer>> res = new ArrayList<>();
+    static List<int[]> numbersSumToN(int n) {
+        List<int[]> res = new ArrayList<>();
         // our cycles should have length greater than 1 (otherwise, it's a fixed
         // permutation).
+        int[] ls = new int[n / 2 + 1];
+        int len = 0;
         for (int i = 2; i <= n; i++) {
-            List<Integer> ls = new ArrayList<>();
-            ls.add(i);
-            numbersSumToNRecursive(res, n - i, ls);
+            ls[len] = i;
+            numbersSumToNRecursive(res, n - i, ls, len + 1);
+            ls[len] = 0;
         }
         return res;
     }
 
     static void numbersSumToNRecursive(
-            List<List<Integer>> all, int rem, List<Integer> ls
+            List<int[]> all, int rem, int[] ls, int len
     ) {
         if (rem == 0) {
-            List<Integer> copy = new ArrayList<>(ls);
+            int[] copy = new int[len];
+            System.arraycopy(ls, 0, copy, 0, len);
             all.add(copy);
             return;
         }
@@ -317,15 +320,15 @@ public class DisorderLyEscape {
             return;
         }
 
-        Integer last = ls.get(ls.size() - 1);
+        int last = ls[len - 1];
         for (int i = last; i <= rem; i++) {
-            ls.add(i);
-            numbersSumToNRecursive(all, rem - i, ls);
-            ls.remove(ls.size() - 1);
+            ls[len] = i;
+            numbersSumToNRecursive(all, rem - i, ls, len + 1);
+            ls[len] = 0;
         }
     }
 
-    static Permutation makePermutation(int n, int fixed, List<Integer> cycles) {
+    static Permutation makePermutation(int n, int fixed, int[] cycles) {
         BigInteger N = BigInteger.valueOf(n);
         BigInteger f = BigInteger.valueOf(fixed);
 
@@ -381,7 +384,7 @@ public class DisorderLyEscape {
 
     static class Permutation {
         int fixed;
-        List<Integer> cycles;
+        int[] cycles;
         // To save computation, we shouldn't generate all permutations with the
         // same configurations. Instead, we count them.
         //
@@ -396,7 +399,7 @@ public class DisorderLyEscape {
         // the count and the config.
         BigInteger count;
 
-        public Permutation(int fixed, List<Integer> cycles, BigInteger count) {
+        public Permutation(int fixed, int[] cycles, BigInteger count) {
             this.fixed = fixed;
             this.cycles = cycles;
             this.count = count;
@@ -406,7 +409,7 @@ public class DisorderLyEscape {
         public String toString() {
             return "Permutation{" +
                     "fixed=" + fixed +
-                    ", cycles=" + cycles +
+                    ", cycles=" + Arrays.toString(cycles) +
                     ", count=" + count +
                     '}';
         }
@@ -416,12 +419,14 @@ public class DisorderLyEscape {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Permutation that = (Permutation) o;
-            return fixed == that.fixed && Objects.equals(cycles, that.cycles) && Objects.equals(count, that.count);
+            return fixed == that.fixed && Arrays.equals(cycles, that.cycles) && Objects.equals(count, that.count);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(fixed, cycles, count);
+            int result = Objects.hash(fixed, count);
+            result = 31 * result + Arrays.hashCode(cycles);
+            return result;
         }
     }
 

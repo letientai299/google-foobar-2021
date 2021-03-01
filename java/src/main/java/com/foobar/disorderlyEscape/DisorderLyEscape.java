@@ -259,14 +259,16 @@ public class DisorderLyEscape {
         fixed = fixed.multiply(m);
 
         // calculate for those sub-matrices that permute both sides.
+        int t = 0;
         for (int lr : rp.cycles) {
             for (int lc : cp.cycles) {
-                int t = lr * lc / lcm(lr, lc);
-                m = S.pow(t);
-                fixed = fixed.multiply(m);
+                int v = lr * lc / lcm(lr, lc);
+                t += v;
             }
         }
 
+        m = S.pow(t);
+        fixed = fixed.multiply(m);
         return fixed;
     }
 

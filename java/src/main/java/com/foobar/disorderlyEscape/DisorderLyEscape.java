@@ -214,8 +214,8 @@ public class DisorderLyEscape {
     //
     // - Similarly, generate per(H).
     //
-    // - For each item in per(W), we calculate number of fixed matrices again it
-    // and all items in per(H) according to our logic.
+    // - For each item in per(W), we calculate number of fixed matrices against
+    // it and all items in per(H) according to our logic.
     //
     // - The sum of all result from above steps, after divide for |G| is our
     // final result.

@@ -3,8 +3,8 @@
 Lesson learned:
 
 - As with anything in Software Engineering, if we could resist the laziness, go
-  with a boring solutions first then progressively optimize it later. This
-  would be done much sooner.
+  with a boring solution first then progressively optimize it later, this would
+  be done much sooner.
 
 Table of Contents:
 
@@ -16,12 +16,12 @@ Table of Contents:
 - [Disorderly Escape](#disorderly-escape)
   - [Problem statement](#problem-statement)
   - [The journey](#the-journey)
-    - [First ah-ha moment](#first-ah-ha-moment)
+    - [How naive I was](#how-naive-i-was)
     - [Is it a Graph problem?](#is-it-a-graph-problem)
-    - [Back to "matrix configuration"](#back-to-matrix-configuration)
-    - [Look for hints on the Internet](#look-for-hints-on-the-internet)
-    - [Learn Group Theory](#learn-group-theory)
-    - [Literate programming come for the rescue](#literate-programming-come-for-the-rescue)
+    - [Return to "matrix configuration"](#return-to-matrix-configuration)
+    - [Every problem has a solution on the Internet](#every-problem-has-a-solution-on-the-internet)
+    - [Math is the true way](#math-is-the-true-way)
+    - [Enlighten by Literate Programming](#enlighten-by-literate-programming)
   - [Helpful resources](#helpful-resources)
   - [What next?](#what-next)
 - [PAQ (Potential Asked Questions)](#paq-potential-asked-questions)
@@ -126,7 +126,7 @@ between ideas various times. My feelings moved between hopeless and excited like
 a pendulum. I believe anyone who has solved any non-trivial problem has a
 similar experience.
 
-#### First ah-ha moment
+#### How naive I was
 
 With the observation that if `H=1`, we can change the problem statement to: _How
 many ways to put W objects to S group_, which have a trivial solution using
@@ -147,7 +147,7 @@ generate all the matrices and sort them somehow, then it is solved.
 
 This approach led me to depression.
 
-#### Back to "matrix configuration"
+#### Return to "matrix configuration"
 
 I can't count how many times I looked at the statement and even the welcome
 message for a hint, any hint.
@@ -169,7 +169,7 @@ cases and generate more test cases for my other solutions!
 That brute force solution can't even get through the case `W=5, H=5, S=5` on my
 machine.
 
-#### Look for hints on the Internet
+#### Every problem has a solution on the Internet
 
 My 2nd last resort is, obviously, to find other people's solutions for ideas.
 Some searching led me to [this question][matrix_math_exchange] on
@@ -191,7 +191,7 @@ instead of a Software Engineer).
 
 I'm not a stranger to Math. But the language there is alien to me.
 
-#### Learn Group Theory
+#### Math is the true way
 
 I spent the next 2 weeks reading a couple of books, slides and watching videos
 (see "Help resources" section below).
@@ -211,7 +211,7 @@ now!"
 The Python code there, however, was helpful to show that my Brute Force solution
 was wrong. "Damn, I couldn't even write a proper brute force."
 
-#### Literate programming come for the rescue
+#### Enlighten by Literate Programming
 
 Since I'm almost run out of time (and mental energy) on this one, I decided to
 give it one last shot. The best way to think in logic is to write down our

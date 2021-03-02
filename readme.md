@@ -19,7 +19,7 @@ Table of Contents:
     - [First ah-ha moment](#first-ah-ha-moment)
     - [Is it a Graph problem?](#is-it-a-graph-problem)
     - [Back to "matrix configuration"](#back-to-matrix-configuration)
-    - [Look for hint on the Internet](#look-for-hint-on-the-internet)
+    - [Look for hints on the Internet](#look-for-hints-on-the-internet)
     - [Learn Group Theory](#learn-group-theory)
     - [Literate programming come for the rescue](#literate-programming-come-for-the-rescue)
   - [Helpful resources](#helpful-resources)
@@ -37,11 +37,11 @@ See also: [Things you should know about Google Foobar Invitation][about_foobar].
 
 ## My Foobar experience
 
-I think different person might get a different set of challenges. It also
+I think different people might get a different set of challenges. It also
 depends on which year/month you do it. That said, take my opinions and
 experience below with a grain of salt.
 
-There's 5 levels, each has different numbers of problem to pass:
+There are 5 levels, each has different numbers of problem to pass:
 
 - Level 1: 1 problem, super easy.
 - Level 2: 2 problems, easy.
@@ -53,13 +53,13 @@ There's 5 levels, each has different numbers of problem to pass:
 - Level 5: 1 problem. It's not Hard. [Calling it's Hard is an offense to
   it!][its_a_fucking_beast].
 
-Foobar gives very generous time limit for each problem. For the level 1, if I
+Foobar gives a very generous time limit for each problem. For Level 1, if I
 remember correctly, we have 7 days. I thought that it was a joke, or perhaps
 Google also look for very young but smart kids, so they give enough time to
 learn the language. By the time I hit level 5, I don't like that joke anymore.
 
-You can watch [the videos][videos] of me solving first 7 problems (1.1 to 4.1)
-within first 4 hours since entering Foobar. The first few minutes of each videos
+You can watch [the videos][videos] of me solving the first 7 problems (1.1 to
+4.1) within 4 hours since entering Foobar. The first few minutes of each video
 should show you full problem statements (and I guess that'll be the only
 interesting bits for you). However, if you're comfortable with Medium level in
 Leetcode, just ignore them.
@@ -75,32 +75,32 @@ Now, let's talk about the 2 most interesting problems.
 This one is not so hard, requires a bit of Geometric Calculus, which is
 something I'm capable of. But I spend more than 10h thinking and solve an
 entirely other problem by mistake: [The Laser gun and mirrored
-room][bodyguards]. That problems is about _how many bodyguards do we, as the
-Commander, need to block all beams?_. Foobar problem is about _how many vector
+room][bodyguards]. That puzzle is about _how many bodyguards do we, as the
+Commander, need to block all beams?_. Foobar problem is about _how many vectors
 can we shoot the Commander when our beam can travel a limited distance?_. Damn!
 
-I recorded the first 1.5 hour on this one, but then throw away the video since I
-know I'll need more time than that, and you definitely don't like to watch me
-struggling more than 30m anyway.
+I recorded the first 1.5 hours on this one, but then throw away the video since
+I know I'll need more time than that, and you don't like to watch me struggling
+more than 30m anyway.
 
 ## Disorderly Escape
 
-This is the my favorite problem. If not because of it, I wouldn't bother to
-write about this journey.
+This is my favorite problem. If not because of it, I wouldn't bother to write
+about this journey.
 
-- [The code with detailed reasoning][my_matrix_code]. But I suggest that you
-  should read the problem statement and think about it for a while before
+- Here's [the code with detailed reasoning][my_matrix_code]. But I suggest that
+  you should read the problem statement and think about it for a while before
   reading the code.
 - Total time wasted here: **20 days** (too many hours to keep track).
 
 ### Problem statement
 
-Let me try to phrase it in a simpler term instead of reuse wordy statement from
-Foobar.
+Let me try to phrase it in a simpler term instead of reuse the wordy statement
+from Foobar.
 
 Given a matrix of `W * H` size. Each cell can take a value from 1 to `S`
-inclusively. 2 matrix are said to be in an **equivalence class** if we can apply
-any number of following transformations to turn one into the other:
+inclusively. 2 matrices are said to be in an **equivalence class** if we can
+apply any number of the following transformations to turn one into the other:
 
 - Swap any 2 columns
 - Swap any 2 rows
@@ -112,9 +112,9 @@ Example of equivalence matrices with `W=3`, `H=2`, `S=2`:
 010   100   100   001   ...
 ```
 
-How many equivalence classes can be constructed knowing `W`, `H` and `S`?
+How many equivalence classes can be constructed knowing `W`, `H`, and `S`?
 
-See [same test cases here](./sample_test_cases.md).
+See [sample test cases here](./sample_test_cases.md).
 
 ### The journey
 
@@ -122,42 +122,41 @@ See [same test cases here](./sample_test_cases.md).
 
 This section is structured to read like a straight path from start to end. But,
 in reality, it is not this well-organized, I went back and forth between ideas
-various times. My feeling move between hopeless and excited like a pendulum. I
-believe anyone who has solved any non-trivial problem has similar experience.
+various times. My feelings move between hopeless and excited like a pendulum. I
+believe anyone who has solved any non-trivial problem has a similar experience.
 
 #### First ah-ha moment
 
 With the observation that if `H=1`, we can change the problem statement to: _How
 many ways to put W objects to S group?_, which have a trivial solution using
 [Star and Bar][star_and_bar] counting method. Since the role of `W` and `H` can
-change, if there's a Dynamic Programming solution that need a 2D memo matrix,
+change, if there's a Dynamic Programming solution that needs a 2D memo matrix,
 we already have the first row and first column. I also hadn't seen any DP
 problem so far. This must be it!
 
-I spend 3 days tapping my head against the wall for how adding one row or just
-one cell could affect the permutations.
+I spend 3 days tapping my head against the wall on this approach.
 
 #### Is it a Graph problem?
 
 Day 4, no more hope for DP, I tried a new approach. What if this is a Graph
-problem? We could consider each cell is a node directly connect to all other
-cells in same column and same row. Our transformations preserve the paths
-between nodes. Perhaps it's a Topological Sorting problem. If we could generate
-all the matrix and sort them somehow, then it is solved.
+problem? We could consider each cell as a node directly connected to all other
+cells in the same column and the same row. Our transformations preserve the
+paths between nodes. Perhaps it's a Topological Sorting problem. If we could
+generate all the matrices and sort them somehow, then it is solved.
 
 This approach led me to depression.
 
 #### Back to "matrix configuration"
 
-I can't count how many time I look at the statement and even the welcome
+I can't count how many times I look at the statement and even the welcome
 message for a hint, any hint.
 
 ![Foobar welcome](./img/foobar-welcome.png)
 
-In Foobar statement, they use the term "matrix configuration". There's one
-immutabilities that we can use:
+In the Foobar statement, they use the term "matrix configuration". There is one
+immutability that we can use:
 
-- The number of cell with state `i` (for `1<=i<=S`) within each row and each
+- The number of cells with state `i` (for `1<=i<=S`) within each row and each
   column won't change. Let's call it row/column configuration.
 - The _set_ of row/column configurations won't change.
 
@@ -166,47 +165,47 @@ each matrix, then use it to compare them. The time complexity for this solution
 would be terrible, but at least it's a valid solution. It should pass some test
 cases and generate more test cases for my other solutions!
 
-That brute force solution can't even get pass the case `W=5,H=5,S=5` on my
+That brute force solution can't even get through the case `W=5, H=5, S=5` on my
 machine.
 
-#### Look for hint on the Internet
+#### Look for hints on the Internet
 
-My 2nd last resort is, obviously, find other people's solutions for idea. Some
-searching led me to [this question][matrix_math_exchange] on Math/StackExchange.
-I stop reading at the keyword **Burnside lemma** in the accepted answer. That's
-all the hint I need.
+My 2nd last resort is, obviously, to find other people's solutions for ideas.
+Some searching led me to [this question][matrix_math_exchange] on
+Math/StackExchange. I stop reading at the keyword **Burnside lemma** in the
+accepted answer. That's all the hint I need.
 
 Reading the [wiki article on Burnside lemma][wiki_burnside] for the first time
-make me wanna jump. "It's a Group Theory problem, a fucking Group Theory
-problem". That's it. That's why all other kind of Math I tried to apply didn't
+makes me wanna jump. "It's a Group Theory problem, a fucking Group Theory
+problem". That's it. That's why all other kinds of Math I tried to apply didn't
 work.
 
-Read that article for several more times make me wanna cry. "What language is
-it? WTF".
+Read that article several more times make me wanna cry. "What language is it?
+WTF".
 
-For the record, I'm used to a Math competitive student, used to read Advanced
-Calculus for fun during high school (sadly, I didn't make it to final round in
-Vietnam Mathematics Olympiad, otherwise, I would be a Mathematician now instead
-of a Software Engineer).
+For the record, I'm used to be a Math competitive student, used to read Advanced
+Calculus for fun during high school (sadly, I didn't make it to the final round
+in Vietnam Mathematics Olympiad, otherwise, I would be a Mathematician now
+instead of a Software Engineer).
 
 I'm not a stranger to Math. But the language there is alien to me.
 
 #### Learn Group Theory
 
-I spent next 2 weeks reading couple of books, slides and watching videos (see
-"Help resources" section below).
+I spent the next 2 weeks reading a couple of books, slides and watching videos
+(see "Help resources" section below).
 
 ![Start learning Group Theory](./img/start_learning_group_theory.png)
 
-I think I understood the concepts, the lemma and some other theorems. I could
+I think I understood the concepts, the lemma, and some other theorems. I could
 solve some exercises, verify many other examples of Burnside's lemma
-applications. But, for some reasons, I still can't crack the matrix problem.
+applications. But, for some reason, I still can't crack the matrix problem.
 
-I read the answer on Math/Exchange again and again, ignore all the code, just
-try to decipher the math and still can't digest the logic. "Why would we need
-`lcm` and `gcd`? What [OEIS sequences][oeis] have any thing to do with this? Oh,
+I read the answer on Math/Exchange, again and again, ignore all the code, just
+try to decipher the math, still can't digest the logic. "Why would we need
+`lcm` and `gcd`? What [OEIS sequences][oeis] have anything to do with this? Oh,
 Maple, hello old friend, but I'm sorry that I don't want to look at you right
-then!"
+now!"
 
 The Python code there, however, was helpful to show that my Brute Force solution
 was wrong. "Damn, I couldn't even write a proper brute force."
@@ -216,16 +215,17 @@ was wrong. "Damn, I couldn't even write a proper brute force."
 Since I'm almost run out of time (and mental energy) on this one, I decided to
 give it one last shot. The best way to think in logic is to write down our
 thought and verify one by one. I did it with pen and paper before, but I guess
-it failed because I was too lazy to write down all the calculation. This is my
-last chance. If it also failed, then, fine[!][fuck_it_im_not_fine_with_that].
+it failed because I was too lazy to write down all the calculations. This is my
+last chance. If it also failed, then, fine[!][fuck_it_im_not_fine_with_that]
 
 This time, I need to do it differently, carefully, every single word must be
 beautifully typed. This time, I need the strongest, heaviest weapon in my
 programming toolbox: [Literate programming][literate_programming].
 
-Thank to Knuth, I'm success this time. All the logic was cleared. All the
-questions answered. All the local test cases passed. The moment my solution pass
-Foobar tests, I can't help but [shouting to the void on Twitter][tw_foobar_pass].
+Thanks to Knuth, I succeed this time. All the logic was cleared. All the
+questions were answered. All the local test cases passed. The moment my solution
+passed Foobar tests, I can't help but [shout to the void on
+Twitter][tw_foobar_pass].
 
 ![Pass level 5](./img/level-5-success.png)
 
@@ -236,7 +236,7 @@ Among many things I had read/watch, these are the most useful:
 - [An introduction to group theory - Tony Gaglione][gt_book]: a good read, clear
   enough to grasp the concepts of Group Theory while short enough to finish it
   in several days (138 pages). [Pinter's A Book of Abstract Algebra][pinter] is
-  another good one but it's much longer (400 pages) and don't have free PDF
+  another good one but it's much longer (400 pages) and doesn't have free PDF
   available.
 - [Essence of Group Theory - videos on Youtube][gt_videos]: those videos offer
   another approach to Group Theory, which help me to strengthen my
@@ -250,17 +250,17 @@ There's one question stuck in my mind.
 
 **Is there any [Closed-form expression][closed_form_expression] (CFE) for the answer?**.
 
-I tried search for them, even discover [a paper][pn_paper] for the CFE of Number
-Partition function `p(n)` (related to function `numbersSumToN` in my solution)
-from [a Math Exchange question in 2011][cfe_pn] (the wiki article [Partition
-(number theory)][pn_wiki] isn't up-to-date regarding this). But I have no luck
-in finding the CFE for this problem.
+I tried to search for them, even discover [a paper][pn_paper] for the CFE of
+Number Partition function `p(n)` (related to function `numbersSumToN` in my
+solution) from [a Math Exchange question in 2011][cfe_pn] (the wiki article
+[Partition (number theory)][pn_wiki] isn't up-to-date regarding this). But I
+have no luck in finding the CFE for this problem.
 
-Math is beautiful and sometime can be surprising. Consider how [Pi hiding in
+Math is beautiful and sometimes can be surprising. Consider how [Pi hiding in
 prime regularities][pi_and_prime] and what [E][e_number] has anything to do with
 [Counting Derangement][wiki_derangement], I believe such expression exists!
 
-I think I'll put it out of my head for a while, revisit it in future, with a
+I think I'll put it out of my head for a while, revisit it in the future, with a
 fresher mind and hopefully with more Math knowledge.
 
 To the people at Google who use it for level 5, thank you, I can't wait for the
@@ -274,41 +274,42 @@ Just Google it :joy:.
 
 **OK, so there's some trick to get invited. But why did you do that?**
 
-I need a new game to play after finish work. And I'm already feel bored with
-Leetcode after solving 800+ problems there. Boredom brings memory back, and I
-was doing random `fdafs` search that time. So I recalled about Foobar and
-decide: "Why not?"
+I need a new game to play after finish work. And I'm already feeling bored with
+Leetcode after solving 800+ problems there. Boredom brings the memory back, and I
+was doing some random search that time. So I recalled about Foobar and decide:
+"Why not?"
 
 **Don't you have work to do? How could you spend so much time on this?**
 
 Don't worry, I still make sure my [day work](shopee.sg) is done, only doing this
-part-time at night and weekend. Honestly I don't have many hobby and already
+part-time at night and weekend. Honestly, I don't have many hobbies and already
 deactivate my Facebook account, so I have spare time to burn.
 
 **Did you Google the solutions?**
 
-I search for 4.2 _after_ submit the solution, to see if there's any smarter
-solution. For level 5, we've talked about it in previous section.
+I search for 4.2 _after_ submitting the solution, to see if there's any smarter
+solution. For level 5, we've talked about it in the previous sections.
 
 **Did you got email from Google after Level 3?**
 
 Nope.
 
 It's so easy (right now) to game the system for an invitation, and the solution
-for almost all problems can be found on the Internet. So, I think there's
-already too resume submitted via Foobar, make the tool less useful for them.
-It's fortunately that they still keep the system around, so we can play for fun.
+for almost all problems can be found on the Internet. So, I think there are
+already too many resumes submitted via Foobar, make Foobar less useful for
+Google as a hiring tool. It's fortunate that they still keep the system around,
+so we can play for fun.
 
-Personally, I don't expect the email or interview, just feel cool to accomplish
-something I couldn't have done 6 years ago. <!-- But interview me please! -->
+I don't expect the email or interview, just feel cool to accomplish something I
+couldn't have done 6 years ago. <!-- But interview me please! -->
 
 ## Final words
 
-Despite calling it's "wasted time", I definitely enjoy this adventure, thanks to
-anyone keeping Foobar maintained. I hope that this repo could become popular, so
-that Foobar team need to use new problems, so I can play again.
+Despite calling it’s “wasted time”, I enjoy this adventure, thanks to anyone
+keeping Foobar maintained. I hope that this repo could become popular so that
+the Foobar team needs to use new problems, so we can have another journey.
 
-If you enjoy reading this so-far, feel like to work with people like me, and
+If you enjoy reading this so-far, feel like working with people like me, and
 your company is not hiring, then join us. [We're always hiring!][shopee_jobs]
 
 <!-- ref -->

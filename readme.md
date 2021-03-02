@@ -3,7 +3,7 @@
 Lesson learned:
 
 - As with anything in Software Engineering, if we could resist the laziness, go
-  with the boring solutions first then progressively optimize it later. This
+  with a boring solutions first then progressively optimize it later. This
   would be done much sooner.
 
 Table of Contents:
@@ -37,26 +37,26 @@ See also: [Things you should know about Google Foobar Invitation][about_foobar].
 
 ## My Foobar experience
 
-I think different people might get a different set of challenges. It also
-depends on which year/month you do it. That said, take my opinions and
-experience below with a grain of salt.
+I think different people might get different sets of challenges. It also depends
+on when you do it. That said, take my opinions and experience below with a grain
+of salt.
 
-There are 5 levels, each has different numbers of problem to pass:
+There are 5 levels, each has different numbers of problem to solve:
 
 - Level 1: 1 problem, super easy.
 - Level 2: 2 problems, easy.
 - Level 3: 3 problems, still easy. In fact, these 3 problems took me the least
   of time. By the time you finish this, Foobar will ask for your resume and
-  contact (as if Google doesn't already know them).
+  contact information (as if Google doesn't already know them).
 - Level 4: 2 problems, Medium to Hard. 4.1 is a graph one. 4.2 is Geometric
   Calculus. We will talk about it later.
 - Level 5: 1 problem. It's not Hard. [Calling it's Hard is an offense to
   it!][its_a_fucking_beast].
 
-Foobar gives a very generous time limit for each problem. For Level 1, if I
+Foobar gives us a very generous time limit for each problem. For Level 1, if I
 remember correctly, we have 7 days. I thought that it was a joke, or perhaps
-Google also look for very young but smart kids, so they give enough time to
-learn the language. By the time I hit level 5, I don't like that joke anymore.
+Google also looks for very young but smart kids, so they give us enough time to
+learn the language. By the time I hit level 5, I did't like that joke anymore.
 
 You can watch [the videos][videos] of me solving the first 7 problems (1.1 to
 4.1) within 4 hours since entering Foobar. The first few minutes of each video
@@ -72,16 +72,16 @@ Now, let's talk about the 2 most interesting problems.
 - [My solution][my_gun_code]
 - [Total time wasted here][time_wasted_meme]: **11h over 2 days**.
 
-This one is not so hard, requires a bit of Geometric Calculus, which is
-something I'm capable of. But I spend more than 10h thinking and solve an
+This one is not so hard, requires a bit of Geometric Calculus knowledge, which
+is something I'm capable of. But I spend more than 10h thinking and solving an
 entirely other problem by mistake: [The Laser gun and mirrored
 room][bodyguards]. That puzzle is about _how many bodyguards do we, as the
-Commander, need to block all beams?_. Foobar problem is about _how many vectors
-can we shoot the Commander when our beam can travel a limited distance?_. Damn!
+Commander, need to block all beams?_ Foobar problem is about _how many vectors
+can we shoot the Commander when our beam can travel a limited distance?_ Damn!
 
-I recorded the first 1.5 hours on this one, but then throw away the video since
-I know I'll need more time than that, and you don't like to watch me struggling
-more than 30m anyway.
+I recorded the first 1.5 hours on this one, but then threw it away since I know
+I'll need more time than that, and you don't like to watch me struggling more
+than 30m anyway.
 
 ## Disorderly Escape
 
@@ -118,17 +118,18 @@ See [sample test cases here](./sample_test_cases.md).
 
 ### The journey
 
-> Skip this section if you don't interesting in the wrong approaches.
+> Skip this section if you aren't interesting in the wrong approaches.
 
-This section is structured to read like a straight path from start to end. But,
-in reality, it is not this well-organized, I went back and forth between ideas
-various times. My feelings move between hopeless and excited like a pendulum. I
-believe anyone who has solved any non-trivial problem has a similar experience.
+This section is structured to be read like a straight path from start to end.
+However, in reality, it is not this well-organized, I went back and forth
+between ideas various times. My feelings moved between hopeless and excited like
+a pendulum. I believe anyone who has solved any non-trivial problem has a
+similar experience.
 
 #### First ah-ha moment
 
 With the observation that if `H=1`, we can change the problem statement to: _How
-many ways to put W objects to S group?_, which have a trivial solution using
+many ways to put W objects to S group_, which have a trivial solution using
 [Star and Bar][star_and_bar] counting method. Since the role of `W` and `H` can
 change, if there's a Dynamic Programming solution that needs a 2D memo matrix,
 we already have the first row and first column. I also hadn't seen any DP
@@ -148,7 +149,7 @@ This approach led me to depression.
 
 #### Back to "matrix configuration"
 
-I can't count how many times I look at the statement and even the welcome
+I can't count how many times I looked at the statement and even the welcome
 message for a hint, any hint.
 
 ![Foobar welcome](./img/foobar-welcome.png)
@@ -185,7 +186,7 @@ WTF".
 
 For the record, I'm used to be a Math competitive student, used to read Advanced
 Calculus for fun during high school (sadly, I didn't make it to the final round
-in Vietnam Mathematics Olympiad, otherwise, I would be a Mathematician now
+of the Vietnam Mathematics Olympiad, otherwise, I would be a Mathematician now
 instead of a Software Engineer).
 
 I'm not a stranger to Math. But the language there is alien to me.
@@ -216,7 +217,7 @@ Since I'm almost run out of time (and mental energy) on this one, I decided to
 give it one last shot. The best way to think in logic is to write down our
 thought and verify one by one. I did it with pen and paper before, but I guess
 it failed because I was too lazy to write down all the calculations. This is my
-last chance. If it also failed, then, fine[!][fuck_it_im_not_fine_with_that]
+last chance. If it also fails, then, fine[!][fuck_it_im_not_fine_with_that]
 
 This time, I need to do it differently, carefully, every single word must be
 beautifully typed. This time, I need the strongest, heaviest weapon in my
@@ -290,11 +291,11 @@ deactivate my Facebook account, so I have spare time to burn.
 I search for 4.2 _after_ submitting the solution, to see if there's any smarter
 solution. For level 5, we've talked about it in the previous sections.
 
-**Did you got email from Google after Level 3?**
+**Did you get an email from Google after Level 3?**
 
 Nope.
 
-It's so easy (right now) to game the system for an invitation, and the solution
+It's so easy (right now) to game the system for an invitation, and the solutions
 for almost all problems can be found on the Internet. So, I think there are
 already too many resumes submitted via Foobar, make Foobar less useful for
 Google as a hiring tool. It's fortunate that they still keep the system around,

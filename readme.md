@@ -312,6 +312,7 @@ the Foobar team needs to use new problems, so we can have another journey.
 
 If you enjoy reading this so-far, feel like working with people like me, and
 your company is not hiring, then join us. [We're always hiring!][shopee_jobs]
+[Contact me for referal][mail_me].
 
 <!-- ref -->
 
@@ -342,3 +343,4 @@ your company is not hiring, then join us. [We're always hiring!][shopee_jobs]
 [shopee_jobs]: https://careers.shopee.sg/jobs/?region_id=&dept_id=109&limit=20&offset=0
 [literate_programming]: https://en.wikipedia.org/wiki/Literate_programming
 [tw_foobar_pass]: https://twitter.com/letientai299/status/1366055683800539137
+[mail_me]: mailto:letientai299@gmail.com

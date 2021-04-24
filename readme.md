@@ -282,9 +282,9 @@ was doing some random search that time. So I recalled about Foobar and decide:
 
 **Don't you have work to do? How could you spend so much time on this?**
 
-Don't worry, I still make sure my [day work](shopee.sg) is done, only doing this
-part-time at night and weekend. Honestly, I don't have many hobbies and already
-deactivate my Facebook account, so I have spare time to burn.
+Don't worry, I still make sure my [day work](https://shopee.sg) is done, only
+doing this part-time at night and weekend. Honestly, I don't have many hobbies
+and already deactivate my Facebook account, so I have spare time to burn.
 
 **Did you Google the solutions?**
 

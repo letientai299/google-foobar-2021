@@ -282,9 +282,9 @@ was doing some random search that time. So I recalled about Foobar and decide:
 
 **Don't you have work to do? How could you spend so much time on this?**
 
-Don't worry, I still make sure my [day work](https://shopee.sg) is done, only
-doing this part-time at night and weekend. Honestly, I don't have many hobbies
-and already deactivate my Facebook account, so I have spare time to burn.
+Don't worry, I still make sure my day work is done, only doing this part-time at
+night and weekend. Honestly, I don't have many hobbies and already deactivate my
+Facebook account, so I have spare time to burn.
 
 **Did you Google the solutions?**
 
@@ -309,10 +309,6 @@ couldn't have done 6 years ago. <!-- But interview me please! -->
 Despite calling it’s “wasted time”, I enjoy this adventure, thanks to anyone
 keeping Foobar maintained. I hope that this repo could become popular so that
 the Foobar team needs to use new problems, so we can have another journey.
-
-If you enjoy reading this so-far, feel like working with people like me, and
-your company is not hiring, then join us. [We're always hiring!][shopee_jobs]
-[Contact me for referal][mail_me].
 
 <!-- ref -->
 
